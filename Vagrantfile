@@ -54,11 +54,13 @@ Vagrant.configure(2) do |config|
 
       # Networking
       config.vm.network "private_network", ip: opts[:eth1]
+
+      # Port forwardings (usually not needed due to second host-only interfaces which can be accessed from the vagrant host) 
       # config.vm.network "forwarded_port", guest: 8282, host: 8282 if opts[:name] == "manager"
 
       #### Provisioning Scripts ####
       # Update packages
-      #config.vm.provision "shell", path: "scripts/provision/updates.sh"
+      # config.vm.provision "shell", path: "scripts/provision/updates.sh"
       
       # Fix a bug in 
       config.vm.provision "shell", path: "scripts/provision/fix_networkd-wait.sh"
