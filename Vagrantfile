@@ -54,7 +54,7 @@ Vagrant.configure(2) do |config|
 
       # Networking
       config.vm.network "private_network", ip: opts[:eth1]
-      config.vm.network "forwarded_port", guest: 8282, host: 8282 if opts[:name] == "manager"
+      # config.vm.network "forwarded_port", guest: 8282, host: 8282 if opts[:name] == "manager"
 
       #### Provisioning Scripts ####
       # Update packages
