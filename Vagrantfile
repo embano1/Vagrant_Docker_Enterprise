@@ -8,6 +8,8 @@
 #Vagrant.require_version '>= 1.8.2'
 ############
 
+#### Variables and options
+# Box configuration
 boxes = [
     {
         :name => "manager",
@@ -28,6 +30,12 @@ boxes = [
         :cpu => "1"
     }
 ]
+
+# Options
+# ToDO implement toggle switches for some larger packages, e.g. harbor
+#$with_harbor = "yes"
+
+####
 
 Vagrant.configure(2) do |config|
 
@@ -73,6 +81,9 @@ Vagrant.configure(2) do |config|
 
       # Configure iptables
       config.vm.provision "shell", path: "scripts/provision/iptables.sh"
+
+      # Configure iptables
+      config.vm.provision "shell", path: "scripts/provision/pw_age.sh"
 
      #### Applications ####
      # Install required applications

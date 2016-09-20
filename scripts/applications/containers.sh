@@ -2,6 +2,10 @@
 
 set -e
 
+# User defined variables
+harbor_version="0.3.5"
+docker_compose_version="1.8.0"
+
 # Check for first argument (must be node name to map containers)
 function check_first_arg {
 	if [ -z $1 ]
@@ -25,7 +29,46 @@ function install_admiral {
 	fi
 }
 
+function install_harbor {
+	if [ $1 == "manager" ]
+	then
+		echo "Cleaning up and fetching VMware Harbor Release (version ${harbor_version})"
+		sudo rm -rf /tmp/harbor*
+		sudo curl -o /tmp/harbor.tar.gz -Ls https://github.com/vmware/harbor/releases/download/${harbor_version}/harbor-installer.tgz
+		if [ $? -ne 0 ]; then
+			echo "Error retrieving file from the web"
+			exit 1
+		fi
 
+		echo "We need tar, installing..."
+		sudo tdnf install tar -y
+		if [ $? -ne 0 ]; then
+			echo "Could not install tar utility (tdnf), exiting."
+			exit 1
+		fi
+
+		echo "We also need docker-compose, fetching ${docker_compose_version}"
+		sudo curl -sL https://github.com/docker/compose/releases/download/${docker_compose_version}/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
+		if [ $? -ne 0 ]; then
+			echo "Could not install docker-compose, exiting."
+			exit 1
+		fi
+
+		sudo chmod +x /usr/local/bin/docker-compose
+
+		echo "Unpacking and configuring VMware Harbor"
+		sudo mkdir /tmp/harbor && sudo tar -xzf /tmp/harbor.tar.gz -C /tmp/harbor --strip-components=2
+                sudo sed -i "s/reg\.mydomain\.com/${1}.local/" /tmp/harbor/harbor.cfg
+                cd /tmp/harbor; ./prepare;
+                sudo /usr/local/bin/docker-compose -f /tmp/harbor/docker-compose.yml up -d
+
+		if [ $? -eq 0 ]; then
+                        echo "Successfully started VMware Harbor..."
+                fi
+	fi
+}
+
+# Call functions
 check_first_arg $1
-install_admiral $1
-
+#install_admiral $1
+install_harbor $1

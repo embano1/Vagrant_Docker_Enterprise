@@ -1,0 +1,7 @@
+# OS X FS metadata
+.DS_Store
+# vim backups of files that are open at time of commit
+*.swp
+# Vagrant local files
+.vagrant/
+vagrant/
