@@ -70,5 +70,5 @@ function install_harbor {
 
 # Call functions
 check_first_arg $1
-#install_admiral $1
+install_admiral $1
 install_harbor $1
