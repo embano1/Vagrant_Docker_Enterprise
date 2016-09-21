@@ -20,7 +20,7 @@ function install_admiral {
 	if [ $1 == "manager" ]
 	then
 		echo "Fetching VMware Admiral Container Image and starting container (ports 8282:8282)"
-		docker pull vmware/admiral > /dev/null
+		docker pull vmware/admiral
 		docker run -d -p 8282:8282 --name admiral vmware/admiral
 		if [ $? -ne 0 ]; then
 			echo "Something went wrong starting VMware Admiral, exiting"
@@ -60,6 +60,8 @@ function install_harbor {
 		sudo mkdir /tmp/harbor && sudo tar -xzf /tmp/harbor.tar.gz -C /tmp/harbor --strip-components=2
                 sudo sed -i "s/reg\.mydomain\.com/${1}.local/" /tmp/harbor/harbor.cfg
                 cd /tmp/harbor; ./prepare;
+
+		echo "Calling docker-compose up"
                 sudo /usr/local/bin/docker-compose -f /tmp/harbor/docker-compose.yml up -d
 
 		if [ $? -eq 0 ]; then
