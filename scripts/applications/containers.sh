@@ -20,7 +20,7 @@ function install_admiral {
 	if [ $1 == "manager" ]
 	then
 		echo "Fetching VMware Admiral Container Image and starting container (ports 8282:8282)"
-		docker pull vmware/admiral > /dev/null
+		docker pull vmware/admiral
 		docker run -d -p 8282:8282 --name admiral vmware/admiral
 		if [ $? -ne 0 ]; then
 			echo "Something went wrong starting VMware Admiral, exiting"
