@@ -2,12 +2,6 @@
 
 # vi: set ft=ruby :
 
-# REMOVE ???
-# Check if script provisioning folder exists
-#require File.expand_path(File.dirname(__FILE__) + '/scripts/provision/updates.sh')
-#Vagrant.require_version '>= 1.8.2'
-############
-
 #### Variables and options
 # Box configuration
 boxes = [
@@ -38,10 +32,9 @@ boxes = [
     }
 ]
 
+####
 # Options
 # ToDO implement toggle switches for some larger packages, e.g. harbor
-#$harbor = "with_harbor"
-
 ####
 
 Vagrant.configure(2) do |config|
@@ -75,10 +68,10 @@ Vagrant.configure(2) do |config|
       #config.vm.network "forwarded_port", guest: 80, host: 8080 if opts[:name] == "harbor"
 
       #### Provisioning Scripts ####
-      # Update packages
+      # Update packages - uncomment to upgrade PhotonOS to the latest release during provisioning
       # config.vm.provision "shell", path: "scripts/provision/updates.sh"
       
-      # Fix a bug in 
+      # Fix a bug in networkd-wait
       config.vm.provision "shell", path: "scripts/provision/fix_networkd-wait.sh"
 
       # Configure docker
@@ -95,7 +88,7 @@ Vagrant.configure(2) do |config|
       # Configure iptables
       config.vm.provision "shell", path: "scripts/provision/iptables.sh"
 
-      # Configure iptables
+      # Configure password aging policies
       config.vm.provision "shell", path: "scripts/provision/pw_age.sh"
 
      #### Applications ####
