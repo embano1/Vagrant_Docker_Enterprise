@@ -12,28 +12,35 @@
 # Box configuration
 boxes = [
     {
-        :name => "manager",
+        :name => "admiral",
         :eth1 => "192.168.33.101",
         :mem => "2048",
         :cpu => "1"
     },
     {
-        :name => "worker-1",
+        :name => "harbor",
         :eth1 => "192.168.33.102",
         :mem => "1024",
         :cpu => "1"
     },
     {
-        :name => "worker-2",
+
+        :name => "worker-1",
         :eth1 => "192.168.33.103",
-        :mem => "1024",
+        :mem => "512",
+        :cpu => "1"
+    },
+    {
+        :name => "worker-2",
+        :eth1 => "192.168.33.104",
+        :mem => "512",
         :cpu => "1"
     }
 ]
 
 # Options
 # ToDO implement toggle switches for some larger packages, e.g. harbor
-#$with_harbor = "yes"
+#$harbor = "with_harbor"
 
 ####
 
@@ -50,7 +57,7 @@ Vagrant.configure(2) do |config|
 
   boxes.each do |opts|
 
-    default = if opts[:name] == "manager" then true else false end
+    default = if opts[:name] == "admiral" then true else false end
 
     config.vm.define opts[:name], primary: default do |config|
       config.vm.hostname = opts[:name]
@@ -64,7 +71,8 @@ Vagrant.configure(2) do |config|
       config.vm.network "private_network", ip: opts[:eth1]
 
       # Port forwardings (usually not needed due to second host-only interfaces which can be accessed from the vagrant host) 
-      # config.vm.network "forwarded_port", guest: 8282, host: 8282 if opts[:name] == "manager"
+      #config.vm.network "forwarded_port", guest: 8282, host: 8282 if opts[:name] == "admiral"
+      #config.vm.network "forwarded_port", guest: 80, host: 8080 if opts[:name] == "harbor"
 
       #### Provisioning Scripts ####
       # Update packages
@@ -77,7 +85,12 @@ Vagrant.configure(2) do |config|
       config.vm.provision "shell", path: "scripts/provision/docker.sh"
       
       # Configure /etc/hosts
-      config.vm.provision "shell", path: "scripts/provision/hosts.sh"
+      boxes.each do |opts|
+        config.vm.provision "shell" do |arg|
+          arg.path = "scripts/provision/hosts.sh"
+          arg.args = opts[:eth1],opts[:name]
+        end
+      end
 
       # Configure iptables
       config.vm.provision "shell", path: "scripts/provision/iptables.sh"

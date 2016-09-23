@@ -15,13 +15,13 @@ function check_first_arg {
 	fi
 }
 
-# Install VMware Admiral Container Management on manager node (https://vmware.github.io/admiral/)
+# Install VMware Admiral Container Management (https://vmware.github.io/admiral/)
 function install_admiral {
-	if [ $1 == "manager" ]
+	if [ $1 == "admiral" ]
 	then
 		echo "Fetching VMware Admiral Container Image and starting container (ports 8282:8282)"
 		docker pull vmware/admiral
-		docker run -d -p 8282:8282 --name admiral vmware/admiral
+		docker run --net=host -d -p 8282:8282 --name admiral vmware/admiral
 		if [ $? -ne 0 ]; then
 			echo "Something went wrong starting VMware Admiral, exiting"
 			exit 1
@@ -29,8 +29,9 @@ function install_admiral {
 	fi
 }
 
+# Install VMware Harbor Container Management (https://vmware.github.io/harbor/)
 function install_harbor {
-	if [ $1 == "manager" ]
+	if [ $1 == "harbor" ]
 	then
 		echo "Cleaning up and fetching VMware Harbor Release (version ${harbor_version})"
 		sudo rm -rf /tmp/harbor*
