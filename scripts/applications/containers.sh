@@ -22,7 +22,7 @@ function install_admiral {
 		echo "Fetching VMware Admiral Container Image and starting container (ports 8282:8282)"
 		sudo docker pull vmware/admiral
 		# TODO Fix static IP
-		sudo docker run -d -p 8282:8282 --add-host="harbor.local:192.168.33.192" --name admiral vmware/admiral
+		sudo docker run -d -p 8282:8282 --add-host="harbor.local:192.168.33.102" --name admiral vmware/admiral
 		if [ $? -ne 0 ]; then
 			echo "Something went wrong starting VMware Admiral, exiting"
 			exit 1
