@@ -12,7 +12,7 @@
   * Depending on your connection, pulling images can take a while so be patient :)
   
 **3. How to start**
-  * git clone https://github.com/embano1/vagrant \<destination\> -b dev
-  * cd \<destination\>
+  * git clone https://github.com/embano1/Vagrant_Docker_Enterprise
+  * cd Vagrant_Docker_Enterprise
   * vagrant up (note: this will launch all four machines by default; one can also select machines, e.g. "vagrant up admiral harbor worker-1")
 
