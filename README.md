@@ -1,7 +1,7 @@
 # Vagrantfile to set up a demo environment for an Enterprise (on-prem) Docker Environment
 
 **1. About**
-  * Vagrantfile and scripts to stand up a 3+ (configurable) node VMware PhotonOS deployment (harbor, admiral, up to two workers) based on VMware PhotonOS, VMware Admiral (Container Host Management) and VMware Harbor (Docker Registry)
+  * Vagrantfile and scripts to stand up a four (configurable) node VMware PhotonOS deployment (harbor, admiral, up to two workers) based on VMware PhotonOS, VMware Admiral (Container Host Management) and VMware Harbor (Docker Registry)
   * See @vmtocloud ´s blog articles [e.g. here](http://www.vmtocloud.com/how-to-use-vmware-admiral-container-service-with-harbor-registry/) or the user guides on [Harbor](https://github.com/vmware/harbor/blob/master/docs/user_guide.md) and [Admiral](https://github.com/vmware/admiral#getting-started) for some better understanding of the products
 
 **2. Notes, Pre-Reqs and tested environment**
