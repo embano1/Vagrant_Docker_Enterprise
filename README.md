@@ -10,9 +10,11 @@
   * The Admiral node requires 1 vCPU and 2GB MEM, Harbor 1 vCPU and 1GB MEM, workers are configured for 1 vCPU and 512MB MEM
   * It is also possible to just launch some of the boxes ("vagrant up admiral worker-1"), e.g. in case of resource constraints
   * **Depending on your connection, pulling images can take a while so be patient :)**
+  * This is a test/ demo environment only, so don´t use in production (especially not because the appliances are not really hardened and most of the communication between the nodes is plain http)
   
 **3. How to start**
   * git clone https://github.com/embano1/Vagrant_Docker_Enterprise
   * cd Vagrant_Docker_Enterprise
   * vagrant up (note: this will launch all four machines by default; one can also select machines, e.g. "vagrant up admiral harbor worker-1")
+  * More: see the [Wiki](https://github.com/embano1/Vagrant_Docker_Enterprise/wiki)
 
