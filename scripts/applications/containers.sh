@@ -3,7 +3,7 @@
 set -e
 
 # User defined variables
-harbor_version="0.3.5"
+harbor_version="0.4.0"
 docker_compose_version="1.8.0"
 
 # Check for first argument (must be node name to map containers)
@@ -36,7 +36,7 @@ function install_harbor {
 	then
 		echo "Cleaning up and fetching VMware Harbor Release (version ${harbor_version})"
 		sudo rm -rf /tmp/harbor*
-		sudo curl -o /tmp/harbor.tar.gz -Ls https://github.com/vmware/harbor/releases/download/${harbor_version}/harbor-installer.tgz
+		sudo curl -o /tmp/harbor.tar.gz -sL https://github.com/vmware/harbor/releases/download/${harbor_version}/harbor-online-installer-${harbor_version}.tgz
 		if [ $? -ne 0 ]; then
 			echo "Error retrieving file from the web"
 			exit 1
@@ -59,7 +59,7 @@ function install_harbor {
 		sudo chmod +x /usr/local/bin/docker-compose
 
 		echo "Unpacking and configuring VMware Harbor"
-		sudo mkdir /tmp/harbor && sudo tar -xzf /tmp/harbor.tar.gz -C /tmp/harbor --strip-components=2
+		sudo mkdir /tmp/harbor && sudo tar -xzf /tmp/harbor.tar.gz -C /tmp/harbor --strip-components=1
                 sudo sed -i "s/reg\.mydomain\.com/${1}.local/" /tmp/harbor/harbor.cfg
                 cd /tmp/harbor; ./prepare;
 
