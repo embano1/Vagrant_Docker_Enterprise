@@ -6,6 +6,7 @@
 
 **2. Notes, Pre-Reqs and tested environment**
   * Tested on OSX 10.11.6, Vagrant 1.8.1 (see [issue w/ Vagrant > 1.8.1 #7808](https://github.com/mitchellh/vagrant/issues/7808), Virtualbox 5.0.26
+    * Tested VMware Photon OS Image v1.2.0 (run "vagrant box update --box vmware/photon" to update to the latest Vagrant Box)
   * Please see [Issues](https://github.com/embano1/Vagrant_Docker_Enterprise/issues) section for planned improvements and current issues
   * The Admiral node requires 1 vCPU and 2GB MEM, Harbor 1 vCPU and 1GB MEM, workers are configured for 1 vCPU and 512MB MEM
   * It is also possible to just launch some of the boxes ("vagrant up admiral worker-1"), e.g. in case of resource constraints
